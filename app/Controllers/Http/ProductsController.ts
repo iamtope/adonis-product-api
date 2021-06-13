@@ -97,9 +97,15 @@ export default class ProductsController {
       async getProduct({  response, auth, params: {id} ,}) {
         await auth.authenticate();
         const product = await Product.find(id)
+        if(!product){
+            return response.json({
+                status: 500,
+                message: `Cannot find product with id ${id}`
+            })
+        }
 
         return response.json({
-            status: 'Product deleted  Succussfully',
+            status: 'Product fetched  Succussfully',
             product
         })
       }
